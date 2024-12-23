@@ -4,10 +4,12 @@ FROM python:3.12-slim
 # Set the working directory
 WORKDIR /app
 
-# Copy and install dependencies first to optimize caching
+# Copy only the requirements file
 COPY requirements.txt /app/
-RUN python -m pip install --upgrade pip \
-    && python -m pip install -r requirements.txt
+
+# Upgrade pip and install dependencies with debugging options
+RUN python -m pip install --no-cache-dir --upgrade pip \
+    && python -m pip install --no-cache-dir -r requirements.txt --default-timeout=100
 
 # Copy the rest of the application files
 COPY . /app/
