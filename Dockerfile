@@ -4,8 +4,14 @@ FROM python:3.12-slim
 # Set the working directory
 WORKDIR /app
 
-# Install git (needed for packages from Git repositories)
-RUN apt-get update && apt-get install -y git \
+# Install system dependencies required by Pillow and tgcrypto
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    libjpeg-dev \
+    zlib1g-dev \
+    libffi-dev \
+    libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy only the requirements file first
